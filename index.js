@@ -20,7 +20,7 @@ const generateMember = async(memberCard) => {
     const lastname = faker.name.lastName()
     const name = `${lastname}${firstname}`
     const englishName = `${en.name.firstName()}`
-    const birthDateTime = await faker.date.past()
+    const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
     const birthDate = birthDateTime.toLocaleDateString('ko-KR', dateOptions)
     const memberRating = memberCard.rating
     const callNumber = faker.phone.phoneNumber("031-####-####")
@@ -80,20 +80,47 @@ const generateMemberCard = async(member) => {
     const boughtDate = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
         // 1년
     console.log(boughtDate)
-    const expired = boughtDateTime.getSeconds() + 365 * 24 * 60 * 60;
+    const expiredDateTime = new Date(boughtDateTime)
+    expiredDateTime.setFullYear(expiredDateTime.getFullYear() + 1)
+    const expiredDate = expiredDateTime.toLocaleDateString('ko-KR', dateOptions)
     return {
         code,
         number,
         cardRating,
         ratingPrice,
         boughtDate,
-        expired
+        expiredDate
+    }
+}
+
+const generateOrder = async(member) => {
+    if(member === undefined) {
+        member = await generateMember()
+    }
+    const orderNumber = faker.random.number(10 ** 20)
+    const memberNumber = member.memberNumber
+    const productNumber = faker.random.number(10 ** 20)
+    const deliveryCorpNumber = faker.random.number(10 ** 20)
+    const totalPrice = faker.random.number(10 ** 6)
+    const totalQuantity = faker.random.number(100)
+    const boughtDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const boughtTime = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
+
+    return {
+        orderNumber,
+        memberNumber,
+        productNumber,
+        deliveryCorpNumber,
+        totalPrice,
+        totalQuantity,
+        boughtTime
     }
 }
 
 // Main Function.
-(async() => {
+    (async() => {
     console.log('generateMember:', await generateMember())
     console.log('generateBusinessMember:', await generateBusinessMember())
     console.log('generateMemberCard:', await generateMemberCard())
+    console.log('generateOrder', await generateOrder())
 })()
