@@ -21,7 +21,7 @@ const generateMember = async(memberCard) => {
     const name = `${lastname}${firstname}`
     const englishName = `${en.name.firstName()}`
     const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
-    const birthDate = birthDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const birthDate = birthDateTime.yymmdd()
     const memberRating = memberCard.rating
     const callNumber = faker.phone.phoneNumber("031-####-####")
     const phoneNumber = faker.phone.phoneNumber("010-####-####")
@@ -117,10 +117,99 @@ const generateOrder = async(member) => {
     }
 }
 
+const generateProduct = async(member, category, review) => {
+    if(member === undefined) {
+        member = await generateMember()
+    }
+    if(category === undefined) {
+        category = await generateCategory()
+    }
+    if(review === undefined) {
+        review = await generateReview(this, category, member)
+    }
+
+    const productCode = faker.random.number(10 ** 20)
+    const categorynumber = faker.random.number(10 ** 20)
+    const productName = faker.commerce.productName()
+    const productCorp = en.company.companyName()
+    const productImage = faker.random.uuid()
+    const spec = faker.lorem.words()
+    const productPrice = faker.random.number(10 ** 6)
+
+    return {
+        productCode,
+        categorynumber,
+        productName,
+        productCorp,
+        productImage,
+        spec,
+        productPrice,
+        category
+    }
+}
+
+const generateCategory = async() => {
+    const categoryCode = faker.random.number(10 ** 20)
+    const categoryName = faker.company.bsNoun()
+
+    return {
+        categoryCode,
+        categoryName
+    }
+}
+
+const generateReview = async(product, category, member) => {
+    if(product === undefined) {
+        product = await generateProduct()
+    }
+    if(category === undefined) {
+        category = await generateCategory()
+    }
+    if(member === undefined) {
+        member = await generateMember()
+    }   
+
+    const postNumber = faker.random.number(10 ** 20)
+    const productNumber = product.productCode
+    const memberNumber = product.member
+    const categoryCode = category.categoryCode
+    const writeDate = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const content = en.lorem.paragraph()
+    const likes = faker.random.number(1000)
+
+    return {
+        postNumber,
+        productNumber,
+        memberNumber,
+        categoryCode,
+        writeDate,
+        content,
+        likes
+    }
+}
+
+const generateInclude = async(order, product) => {
+    if(order === undefined) {
+        order = await generateOrder()
+    }
+    if(product === undefined) {
+        product = await generateProduct()
+    }
+
+    const orderNumber = order.number
+    const memberNumber = order.memberNumber
+    const productCode = product.productCode
+    const categoryCode = product.category.categoryCode
+    
+}
+
 // Main Function.
     (async() => {
     console.log('generateMember:', await generateMember())
     console.log('generateBusinessMember:', await generateBusinessMember())
     console.log('generateMemberCard:', await generateMemberCard())
     console.log('generateOrder', await generateOrder())
+    console.log('generateProduct', await generateProduct())
+    console.log('generateCategory', await generateCategory())
+    console.log('generateReview', await generateReview())
 })()
