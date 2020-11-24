@@ -20,7 +20,8 @@ const generateMember = async(memberCard) => {
     const lastname = faker.name.lastName()
     const name = `${lastname}${firstname}`
     const englishName = `${en.name.firstName()}`
-    const birthDate = await faker.date.past().toLocaleDateString('ko-KR', dateOptions)
+    const birthDateTime = await faker.date.past()
+    const birthDate = birthDateTime.toLocaleDateString('ko-KR', dateOptions)
     const memberRating = memberCard.rating
     const callNumber = faker.phone.phoneNumber("031-####-####")
     const phoneNumber = faker.phone.phoneNumber("010-####-####")
@@ -33,6 +34,7 @@ const generateMember = async(memberCard) => {
         password,
         name,
         englishName,
+        birthDateTime,
         birthDate,
         memberRating,
         callNumber,
@@ -71,12 +73,14 @@ const generateMemberCard = async(member) => {
         member = await generateMember(this)
     }
     const code = faker.random.number(10 ** 20)
-    const number = member.number
+    const number = member.memberNumber
     const cardRating = ratings.choice()
     const ratingPrice = ratingPrices[cardRating]
-    const boughtDate = await faker.date.between(member.birthDate, Date.now())
+    const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
+    const boughtDate = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
         // 1년
-    const expired = boughtDate.getTime() + 365 * 24 * 60 * 60 * 1000;
+    console.log(boughtDate)
+    const expired = boughtDateTime.getSeconds() + 365 * 24 * 60 * 60;
     return {
         code,
         number,
