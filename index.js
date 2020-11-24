@@ -5,8 +5,8 @@ const romanize = require('transliteration').slugify
 require('./auxiliary')
 
 const result = []
-const rating = ['GoldStar', 'Executive GoldStar']
-const ratingPrice = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
+const ratings = ['GoldStar', 'Executive GoldStar']
+const ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 
@@ -68,12 +68,12 @@ const generateBusinessMember = async(member) => {
 
 const generateMemberCard = async(member) => {
     if (member === undefined) {
-        member = await generateMember()
+        member = await generateMember(this)
     }
     const code = faker.random.number(10 ** 20)
     const number = member.number
-    const cardRating = rating.choice()
-    const ratingPrice = ratingPrice[cardRating]
+    const cardRating = ratings.choice()
+    const ratingPrice = ratingPrices[cardRating]
     const boughtDate = await faker.date.between(member.birthDate, Date.now())
         // 1년
     const expired = boughtDate.getTime() + 365 * 24 * 60 * 60 * 1000;
@@ -91,4 +91,5 @@ const generateMemberCard = async(member) => {
 (async() => {
     console.log('generateMember:', await generateMember())
     console.log('generateBusinessMember:', await generateBusinessMember())
+    console.log('generateMemberCard:', await generateMemberCard())
 })()
