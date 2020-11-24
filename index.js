@@ -3,9 +3,9 @@ const faker = require('faker/locale/ko')
 const en = require('faker/locale/en')
 const { date } = require('faker/lib/locales/en')
 const romanize = require('transliteration').slugify
+const fs = require('fs')
 require('./auxiliary')
 
-const result = []
 const ratings = ['GoldStar', 'Executive GoldStar']
 const ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
@@ -80,7 +80,6 @@ const generateMemberCard = async(member) => {
     const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
     const boughtDate = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
         // 1년
-    console.log(boughtDate)
     const expiredDateTime = new Date(boughtDateTime)
     expiredDateTime.setFullYear(expiredDateTime.getFullYear() + 1)
     const expiredDate = expiredDateTime.toLocaleDateString('ko-KR', dateOptions)
@@ -363,4 +362,19 @@ const generateRequest = async(order, delivery) => {
     console.log('generateCheck', await generateCheck())
     console.log('generateEmployee', await generateEmployee())
     console.log('generateRequest', await generateRequest())
+    const fields = ['member', 'businessMember', 'memberCard', 'order', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'check', 'employee', 'request']
+    const funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery
+    , generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
+    const result = new Map()
+    for(const field of fields) {
+        result[field] = []
+    }
+    for(let i = 0; i < 30; i++) {
+        for(const field of fields) {
+            const selectedFun = funcs[fields.indexOf(field)]
+            const res = await selectedFun()
+            result[field].push(res)
+        }
+    }
+    fs.writeFileSync('data.json', JSON.stringify(result), encoding="utf-8")
 })()
