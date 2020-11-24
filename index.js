@@ -200,7 +200,17 @@ const generateInclude = async(order, product) => {
     const memberNumber = order.memberNumber
     const productCode = product.productCode
     const categoryCode = product.category.categoryCode
-    
+    const quantity = faker.random.number(100)
+    const sumPrice = faker.random.number(10 ** 6)
+
+    return {
+        orderNumber,
+        memberNumber,
+        productCode,
+        categoryCode,
+        quantity,
+        sumPrice
+    }
 }
 
 // Main Function.
@@ -212,4 +222,5 @@ const generateInclude = async(order, product) => {
     console.log('generateProduct', await generateProduct())
     console.log('generateCategory', await generateCategory())
     console.log('generateReview', await generateReview())
+    console.log('generateInclude', await generateInclude())
 })()
