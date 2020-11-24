@@ -1,6 +1,7 @@
 const createCsvWriter = require('csv-writer').createObjectCsvWriter
 const faker = require('faker/locale/ko')
 const en = require('faker/locale/en')
+const { date } = require('faker/lib/locales/en')
 const romanize = require('transliteration').slugify
 require('./auxiliary')
 
@@ -21,7 +22,7 @@ const generateMember = async(memberCard) => {
     const name = `${lastname}${firstname}`
     const englishName = `${en.name.firstName()}`
     const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
-    const birthDate = birthDateTime.yymmdd()
+    const birthDate = +birthDateTime.yymmdd()
     const memberRating = memberCard.rating
     const callNumber = faker.phone.phoneNumber("031-####-####")
     const phoneNumber = faker.phone.phoneNumber("010-####-####")
@@ -173,7 +174,8 @@ const generateReview = async(product, category, member) => {
     const productNumber = product.productCode
     const memberNumber = product.member
     const categoryCode = category.categoryCode
-    const writeDate = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const writeDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const writeDate = writeDateTime.toLocaleDateString('ko-KR', dateOptions)
     const content = en.lorem.paragraph()
     const likes = faker.random.number(1000)
 
@@ -213,6 +215,137 @@ const generateInclude = async(order, product) => {
     }
 }
 
+const generateDelivery = async() => {
+    const deliveryNumber = faker.random.number(10 ** 6)
+    const deliveryStart = en.address.streetAddress()
+    const deliveryDestination = en.address.streetAddress()
+    const deliveryDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const deliveryDate = deliveryDateTime.toLocaleDateString('ko-KR', dateOptions)
+
+    return {
+        deliveryNumber,
+        deliveryStart,
+        deliveryDestination,
+        deliveryDate
+    }
+}
+
+const generateSend = async(delivery, product) => {
+    if(delivery === undefined) {
+        delivery = await generateDelivery()
+    }
+    if(product === undefined) {
+        product = await generateProduct()
+    }
+    const deliveryNumber = delivery.deliveryNumber
+    const productCode = product.productCode
+    const categoryCode = product.category.categoryCode
+    const totalTime = faker.random.number(100)
+
+    return {
+        deliveryNumber,
+        productCode,
+        categoryCode,
+        totalTime
+    }
+}
+const generateRefresh = async(product, remains) => {
+    if(product === undefined) {
+        product = await generateProduct()
+    }
+    if(remains === undefined) {
+        remains = await generateRemains()
+    }
+
+    const productCode = product.productCode
+    const categoryCode = product.category.categoryCode
+    const remainsNumber = remains.remainsNumber
+    const refreshDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const refreshDate = refreshDateTime.toLocaleDateString('ko-KR', dateOptions)
+
+    return {
+        productCode,
+        categoryCode,
+        remainsNumber,
+        refreshDate
+    }
+}
+const generateRemains = async() => {
+    const remainsNumber = faker.random.number(10 ** 6)
+    const remainsQuantity = faker.random.number(100)
+    const remainsDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const remainsDate = remainsDateTime.toLocaleDateString('ko-KR', dateOptions)
+
+    return {
+        remainsNumber,
+        remainsQuantity,
+        remainsDate
+    }
+}
+const generateCheck = async(remains, employee) => {
+    if(remains === undefined) {
+        remains = await generateRemains()
+    }
+    if(employee === undefined) {
+        employee = await generateEmployee()
+    }
+    const employeeNumber = employee.employeeNumber
+    const remainsNumber = remains.remainsNumber
+    const checkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const checkedDate = checkedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const others = ""
+
+    return {
+        employeeNumber,
+        remainsNumber,
+        checkedDate,
+        others
+    }
+}
+const generateEmployee = async() => {
+    const employeeNumber = faker.random.number(10 ** 6)
+    const firstname = faker.name.firstName()
+    const lastname = faker.name.lastName()
+    const employeeName = `${lastname}${firstname}`
+    const employeeSSN = faker.random.number(10 ** 6)
+    const employeePhoneNumber = faker.phone.phoneNumber("010-####-####")
+    const employeeEmail = faker.internet.email(romanize(firstname), romanize(lastname))
+    const employeeWorkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const employeeWorkedDate = employeeWorkedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const employeeSalary = (3 + faker.random.number(10)) * 10 ** 7
+
+    return {
+        employeeNumber,
+        employeeName,
+        employeeSSN,
+        employeePhoneNumber,
+        employeeEmail,
+        employeeWorkedDate,
+        employeeSalary
+    }
+}
+
+const generateRequest = async(order, delivery) => {
+    if(order === undefined) {
+        order = await generateOrder()
+    }
+    if(delivery === undefined) {
+        delivery = await generateDelivery()
+    }
+
+    const orderNumber = order.orderNumber
+    const memberNumber = order.memberNumber
+    const deliveryNumber = delivery.deliveryNumber
+    const requestedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
+    const requestedDate = requestedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    return {
+        orderNumber,
+        memberNumber,
+        deliveryNumber,
+        requestedDate
+    }
+}
+
 // Main Function.
     (async() => {
     console.log('generateMember:', await generateMember())
@@ -223,4 +356,11 @@ const generateInclude = async(order, product) => {
     console.log('generateCategory', await generateCategory())
     console.log('generateReview', await generateReview())
     console.log('generateInclude', await generateInclude())
+    console.log('generateDelivery', await generateDelivery())
+    console.log('generateSend', await generateSend())
+    console.log('generateRefresh', await generateRefresh())
+    console.log('generateRemains', await generateRemains())
+    console.log('generateCheck', await generateCheck())
+    console.log('generateEmployee', await generateEmployee())
+    console.log('generateRequest', await generateRequest())
 })()
