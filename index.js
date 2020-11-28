@@ -172,12 +172,12 @@ const generateReview = async(product, category, member) => {
 
     const postNumber = faker.random.number(10 ** 5)
     const productNumber = product.productCode
-    const memberNumber = product.member
+    const memberNumber = member.memberNumber
     const categoryCode = category.categoryCode
     const writeDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
     const writeDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('${writeDateTime.toISOString(dateOptions)}'))`
     const content = en.lorem.paragraph()
-    const likes = faker.random.number(1000)
+    const likes = faker.random.number(500)
 
     return {
         postNumber,
@@ -389,7 +389,7 @@ const generateRequest = async(order, delivery) => {
                 }
             }
             result[field].push(res)
-            const query = `INSERT INTO ${placeholders.join(', ')} VALUES ${values.join(', ')}`
+            const query = `INSERT INTO (${placeholders.join(', ')}) VALUES (${values.join(', ')})`
             queries.push(query)
         }
     }
