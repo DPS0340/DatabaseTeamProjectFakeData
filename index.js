@@ -389,7 +389,7 @@ const generateRequest = async(order, delivery) => {
                 }
             }
             result[field].push(res)
-            const query = `INSERT INTO ${field} (${placeholders.join(', ')}) VALUES (${values.join(', ')})`
+            const query = `INSERT INTO ${field.toUpperCase()} (${placeholders.join(', ')}) VALUES (${values.join(', ')})`
             queries.push(query)
         }
     }
