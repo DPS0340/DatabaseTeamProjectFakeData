@@ -78,11 +78,11 @@ const generateMemberCard = async(member) => {
     const cardRating = ratings.choice()
     const ratingPrice = ratingPrices[cardRating]
     const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
-    const boughtDate = boughtDateTime.toISOString(dateOptions)
+    const boughtDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${boughtDateTime.toISOString(dateOptions)}));`
         // 1년
     const expiredDateTime = new Date(boughtDateTime)
     expiredDateTime.setFullYear(expiredDateTime.getFullYear() + 1)
-    const expiredDate = expiredDateTime.toISOString(dateOptions)
+    const expiredDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${expiredDateTime.toISOString(dateOptions)}));`
     return {
         code,
         number,
@@ -104,7 +104,7 @@ const generateOrder = async(member) => {
     const totalPrice = faker.random.number(10 ** 6)
     const totalQuantity = faker.random.number(100)
     const boughtDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const boughtTime = boughtDateTime.toISOString(dateOptions)
+    const boughtTime = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${boughtDateTime.toISOString(dateOptions)}));`
 
     return {
         orderNumber,
@@ -135,6 +135,7 @@ const generateProduct = async(member, category, review) => {
     const productImage = faker.random.uuid()
     const spec = faker.lorem.words()
     const productPrice = faker.random.number(10 ** 6)
+    const categoryCode = category.categoryCode
 
     return {
         productCode,
@@ -144,7 +145,7 @@ const generateProduct = async(member, category, review) => {
         productImage,
         spec,
         productPrice,
-        category
+        categoryCode
     }
 }
 
@@ -174,7 +175,7 @@ const generateReview = async(product, category, member) => {
     const memberNumber = product.member
     const categoryCode = category.categoryCode
     const writeDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const writeDate = writeDateTime.toISOString(dateOptions)
+    const writeDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${writeDateTime.toISOString(dateOptions)}));`
     const content = en.lorem.paragraph()
     const likes = faker.random.number(1000)
 
@@ -200,7 +201,7 @@ const generateInclude = async(order, product) => {
     const orderNumber = order.number
     const memberNumber = order.memberNumber
     const productCode = product.productCode
-    const categoryCode = product.category.categoryCode
+    const categoryCode = product.categoryCode
     const quantity = faker.random.number(100)
     const sumPrice = faker.random.number(10 ** 6)
 
@@ -219,7 +220,7 @@ const generateDelivery = async() => {
     const deliveryStart = en.address.streetAddress()
     const deliveryDestination = en.address.streetAddress()
     const deliveryDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const deliveryDate = deliveryDateTime.toISOString(dateOptions)
+    const deliveryDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${deliveryDateTime.toISOString(dateOptions)}));`
 
     return {
         deliveryNumber,
@@ -238,7 +239,7 @@ const generateSend = async(delivery, product) => {
     }
     const deliveryNumber = delivery.deliveryNumber
     const productCode = product.productCode
-    const categoryCode = product.category.categoryCode
+    const categoryCode = product.categoryCode
     const totalTime = faker.random.number(100)
 
     return {
@@ -257,10 +258,10 @@ const generateRefresh = async(product, remains) => {
     }
 
     const productCode = product.productCode
-    const categoryCode = product.category.categoryCode
+    const categoryCode = product.categoryCode
     const remainsNumber = remains.remainsNumber
     const refreshDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const refreshDate = refreshDateTime.toISOString(dateOptions)
+    const refreshDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${refreshDateTime.toISOString(dateOptions)}));`
 
     return {
         productCode,
@@ -273,7 +274,7 @@ const generateRemains = async() => {
     const remainsNumber = faker.random.number(10 ** 6)
     const remainsQuantity = faker.random.number(100)
     const remainsDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const remainsDate = remainsDateTime.toISOString(dateOptions)
+    const remainsDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${remainsDateTime.toISOString(dateOptions)}));`
 
     return {
         remainsNumber,
@@ -291,7 +292,7 @@ const generateCheck = async(remains, employee) => {
     const employeeNumber = employee.employeeNumber
     const remainsNumber = remains.remainsNumber
     const checkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const checkedDate = checkedDateTime.toISOString(dateOptions)
+    const checkedDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${checkedDateTime.toISOString(dateOptions)}));`
     const others = ""
 
     return {
@@ -310,7 +311,7 @@ const generateEmployee = async() => {
     const employeePhoneNumber = faker.phone.phoneNumber("010########")
     const employeeEmail = faker.internet.email(romanize(firstname), romanize(lastname))
     const employeeWorkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const employeeWorkedDate = employeeWorkedDateTime.toISOString(dateOptions)
+    const employeeWorkedDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${employeeWorkedDateTime.toISOString(dateOptions)}));`
     const employeeSalary = (3 + faker.random.number(10)) * 10 ** 7
 
     return {
@@ -336,7 +337,7 @@ const generateRequest = async(order, delivery) => {
     const memberNumber = order.memberNumber
     const deliveryNumber = delivery.deliveryNumber
     const requestedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const requestedDate = requestedDateTime.toISOString(dateOptions)
+    const requestedDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ(${requestedDateTime.toISOString(dateOptions)}));`
     return {
         orderNumber,
         memberNumber,
