@@ -78,11 +78,11 @@ const generateMemberCard = async(member) => {
     const cardRating = ratings.choice()
     const ratingPrice = ratingPrices[cardRating]
     const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
-    const boughtDate = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const boughtDate = boughtDateTime.toISOString(dateOptions)
         // 1년
     const expiredDateTime = new Date(boughtDateTime)
     expiredDateTime.setFullYear(expiredDateTime.getFullYear() + 1)
-    const expiredDate = expiredDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const expiredDate = expiredDateTime.toISOString(dateOptions)
     return {
         code,
         number,
@@ -104,7 +104,7 @@ const generateOrder = async(member) => {
     const totalPrice = faker.random.number(10 ** 6)
     const totalQuantity = faker.random.number(100)
     const boughtDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const boughtTime = boughtDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const boughtTime = boughtDateTime.toISOString(dateOptions)
 
     return {
         orderNumber,
@@ -174,7 +174,7 @@ const generateReview = async(product, category, member) => {
     const memberNumber = product.member
     const categoryCode = category.categoryCode
     const writeDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const writeDate = writeDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const writeDate = writeDateTime.toISOString(dateOptions)
     const content = en.lorem.paragraph()
     const likes = faker.random.number(1000)
 
@@ -219,7 +219,7 @@ const generateDelivery = async() => {
     const deliveryStart = en.address.streetAddress()
     const deliveryDestination = en.address.streetAddress()
     const deliveryDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const deliveryDate = deliveryDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const deliveryDate = deliveryDateTime.toISOString(dateOptions)
 
     return {
         deliveryNumber,
@@ -260,7 +260,7 @@ const generateRefresh = async(product, remains) => {
     const categoryCode = product.category.categoryCode
     const remainsNumber = remains.remainsNumber
     const refreshDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const refreshDate = refreshDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const refreshDate = refreshDateTime.toISOString(dateOptions)
 
     return {
         productCode,
@@ -273,7 +273,7 @@ const generateRemains = async() => {
     const remainsNumber = faker.random.number(10 ** 6)
     const remainsQuantity = faker.random.number(100)
     const remainsDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const remainsDate = remainsDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const remainsDate = remainsDateTime.toISOString(dateOptions)
 
     return {
         remainsNumber,
@@ -291,7 +291,7 @@ const generateCheck = async(remains, employee) => {
     const employeeNumber = employee.employeeNumber
     const remainsNumber = remains.remainsNumber
     const checkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const checkedDate = checkedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const checkedDate = checkedDateTime.toISOString(dateOptions)
     const others = ""
 
     return {
@@ -310,7 +310,7 @@ const generateEmployee = async() => {
     const employeePhoneNumber = faker.phone.phoneNumber("010########")
     const employeeEmail = faker.internet.email(romanize(firstname), romanize(lastname))
     const employeeWorkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const employeeWorkedDate = employeeWorkedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const employeeWorkedDate = employeeWorkedDateTime.toISOString(dateOptions)
     const employeeSalary = (3 + faker.random.number(10)) * 10 ** 7
 
     return {
@@ -336,7 +336,7 @@ const generateRequest = async(order, delivery) => {
     const memberNumber = order.memberNumber
     const deliveryNumber = delivery.deliveryNumber
     const requestedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
-    const requestedDate = requestedDateTime.toLocaleDateString('ko-KR', dateOptions)
+    const requestedDate = requestedDateTime.toISOString(dateOptions)
     return {
         orderNumber,
         memberNumber,
@@ -386,7 +386,7 @@ const generateRequest = async(order, delivery) => {
         }
     }
     console.log(queries)
-    const queriesString = queries.join(', ')
+    const queriesString = queries.join('\n')
     fs.writeFileSync('query.txt', queriesString, encoding="utf-8")
     fs.writeFileSync('data.json', JSON.stringify(result), encoding="utf-8")
 })()
