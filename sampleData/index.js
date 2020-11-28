@@ -11,6 +11,96 @@ const ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
 
+const curryType
+
+class PK extends Annotation {
+    constructor() {}
+
+    get() {return e }
+}
+
+class FK extends Annotation {
+    constructor() {}
+
+    get() {return (e) => `PRIMARY KEY ${e}`}
+}
+
+class Annotation {
+    constructor() {}
+
+    get() {return (e) => ""}
+}
+
+class TYPE {
+    constructor(typeName, checkfn) {
+        this.typeName = typeName
+        this.checkfn = checkfn
+    }
+    check(e) {
+        try {
+            return this.checkfn(e)
+        } catch (err) {
+            console.log(err)
+            return false
+        }
+    }
+}
+
+class Column {
+    constructor(value, type, annotations) {
+        this.value = value
+        this.type = type
+        this.annotations = annotations
+    }
+}
+
+class Table {
+    constructor(name, columns) {
+        this.name = name
+        this.columns = columns
+        this.rows = []
+    }
+    
+    append(...args) {
+        if(args.length != this.columns.length) {
+            console.log("Columns size Mismatch")
+            return false
+        }
+        const row = []
+        for(let i=0;i<args.length;i++) {
+            const constructed = this.columns(args[i])
+            row.push()
+        }
+        this.rows.push(rows)
+        return true
+    }
+
+    __get_create_query() {
+        const head = `CREATE TABLE ${name} (`
+        const tail = ");"
+        let mid = ``
+        for(const column of columns) {
+            
+        }
+    }
+
+    __get_insert_query() {
+
+    }
+
+    get_query() {
+
+    }
+}
+
+class TableBuilder {
+    constructor() {
+        
+    }
+    
+}
+
+
 const generateMember = async(memberCard) => {
     if (memberCard == undefined) {
         memberCard = await generateMemberCard()
@@ -348,21 +438,6 @@ const generateRequest = async(order, delivery) => {
 
 // Main Function.
     (async() => {
-    console.log('generateMember:', await generateMember())
-    console.log('generateBusinessMember:', await generateBusinessMember())
-    console.log('generateMemberCard:', await generateMemberCard())
-    console.log('generateOrder', await generateOrder())
-    console.log('generateProduct', await generateProduct())
-    console.log('generateCategory', await generateCategory())
-    console.log('generateReview', await generateReview())
-    console.log('generateInclude', await generateInclude())
-    console.log('generateDelivery', await generateDelivery())
-    console.log('generateSend', await generateSend())
-    console.log('generateRefresh', await generateRefresh())
-    console.log('generateRemains', await generateRemains())
-    console.log('generateCheck', await generateCheck())
-    console.log('generateEmployee', await generateEmployee())
-    console.log('generateRequest', await generateRequest())
     const fields = ['member', 'businessMember', 'memberCard', 'order', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'check', 'employee', 'request']
     const funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery
     , generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
