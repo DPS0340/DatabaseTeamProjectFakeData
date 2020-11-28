@@ -23,7 +23,7 @@ const generateMember = async(memberCard) => {
     const englishName = `${en.name.firstName()}`
     const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
     const birthDate = +birthDateTime.yymmdd()
-    const memberRating = memberCard.rating
+    const memberRating = memberCard.cardRating
     const callNumber = faker.phone.phoneNumber("031########")
     const phoneNumber = faker.phone.phoneNumber("010########")
     const address = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
