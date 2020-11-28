@@ -371,12 +371,14 @@ const generateRequest = async(order, delivery) => {
     for(const field of fields) {
         result[field] = []
     }
+    const table = new Map()
     for(let i = 0; i < 10; i++) {
         for(const field of fields) {
             const selectedFun = funcs[fields.indexOf(field)]
             const res = await selectedFun()
             const placeholders = []
             const values = []
+            table[field] = []
             for(const [k, v] of Object.entries(res)) {
                 if(k.includes('DateTime')) {
                     continue;
@@ -387,6 +389,7 @@ const generateRequest = async(order, delivery) => {
                 } else {
                     values.push(v)
                 }
+                table[field].push(k)
             }
             result[field].push(res)
             const query = `INSERT INTO ${field.toUpperCase()} (${placeholders.join(', ')}) VALUES (${values.join(', ')})`
@@ -395,6 +398,7 @@ const generateRequest = async(order, delivery) => {
     }
     console.log(queries)
     const queriesString = queries.join('\n')
+    fs.writeFileSync('table.json', JSON.stringify(table), encoding="utf-8")
     fs.writeFileSync('query.txt', queriesString, encoding="utf-8")
     fs.writeFileSync('data.json', JSON.stringify(result), encoding="utf-8")
 })()
