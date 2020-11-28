@@ -1,6 +1,6 @@
-require('./dependencies')
 require('./generateFunction')
 require('./classes')
+const CSV = require('comma-separated-values')
 const fs = require('fs')
 
 Array.prototype.choice = function() {
@@ -14,17 +14,17 @@ Date.prototype.yymmdd = function() {
     return yy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0])
 };
 
-const fields = ['member', 'businessMember', 'memberCard', 'order', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'check', 'employee', 'request']
-const funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery
-, generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
-const ratings = ['GoldStar', 'Executive GoldStar']
-const ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
-const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-const PK = ['memberNumber', 'businessNumber', 'cardCode', 'orderNumber', 'postNumber', 'deliveryNumber', 'productCode', 'categoryCode', 'remainsNumber', 'employeeNumber']
-const companies = []
-const companyData = fs.readFileSync('./sampleData/companies.csv')
+exports.fields = ['member', 'businessMember', 'memberCard', 'order', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'check', 'employee', 'request']
+exports.ratings = ['GoldStar', 'Executive GoldStar']
+exports.ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
+exports.dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+exports.PK = ['memberNumber', 'businessNumber', 'cardCode', 'orderNumber', 'postNumber', 'deliveryNumber', 'productCode', 'categoryCode', 'remainsNumber', 'employeeNumber']
+exports.companies = []
+// exports.companyData = fs.readFileSync('./sampleData/companies.csv')
+// exports.csv = CSV(exports.companyData, {header: true}).parse()
+// console.log(exports.generateCompany())
 
-const typeCheck = (e) => {
+exports.typeCheck = (e) => {
     const types = {
         "Date": "DATE",
         "string": cnt => `char(${cnt})`,
@@ -56,6 +56,7 @@ const typeCheck = (e) => {
     return curriedType(() => true)
 }
 
-const generateCompany = () => {
-    const csv = new CSV(data, {header: true}).parse();
+exports.generateCompany = () => {
+    const arr = csv[Math.floor(Math.random() * csv.length)]
+    return arr[0]
 }

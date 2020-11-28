@@ -1,4 +1,9 @@
-require('./dependencies')
+
+class Annotation {
+    constructor() {}
+
+    get() {return () => ""}
+}
 
 class PK extends Annotation {
     constructor() {}
@@ -13,12 +18,6 @@ class FK extends Annotation {
     }
 
     get() {return () => `FOREIGN KEY REFERENCES ${ref}(${tableName})`}
-}
-
-class Annotation {
-    constructor() {}
-
-    get() {return () => ""}
 }
 
 class TYPE {

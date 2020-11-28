@@ -1,12 +1,14 @@
-
-const fs = require('fs')
-require('./dependencies')
-require('./auxiliary')
-require('./generateFunction')
+const en = require('faker/locale/en')
+const fs = require('fs');
+const auxiliary = require('./auxiliary');
+const romanize = require('transliteration').slugify
+const generateFunction = require('./generateFunction')
 
 
 // Main Function.
-    (async() => {
+;    (async() => {
+    const fields = auxiliary.fields
+    const funcs = generateFunction.funcs
     const result = new Map()
     const queries = []
     for(const field of fields) {
@@ -39,7 +41,7 @@ require('./generateFunction')
     }
     console.log(queries)
     const queriesString = queries.join('\n')
-    fs.writeFileSync('sampleData/table.json', JSON.stringify(table), encoding="utf-8")
-    fs.writeFileSync('sampleData/query.txt', queriesString, encoding="utf-8")
-    fs.writeFileSync('sampleData/sampleDatadata.json', JSON.stringify(result), encoding="utf-8")
+    fs.writeFileSync('./sampleData/table.json', JSON.stringify(table), encoding="utf-8")
+    fs.writeFileSync('./sampleData/query.txt', queriesString, encoding="utf-8")
+    fs.writeFileSync('./sampleData/sampleDatadata.json', JSON.stringify(result), encoding="utf-8")
 })()
