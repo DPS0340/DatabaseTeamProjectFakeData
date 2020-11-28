@@ -176,7 +176,7 @@ const generateReview = async(product, category, member) => {
     const categoryCode = category.categoryCode
     const writeDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
     const writeDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('${writeDateTime.toISOString(dateOptions)}'))`
-    const content = en.lorem.paragraph()
+    const content = en.lorem.words()
     const likes = faker.random.number(500)
 
     return {
