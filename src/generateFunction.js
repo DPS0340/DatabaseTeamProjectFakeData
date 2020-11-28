@@ -39,12 +39,14 @@ const generateMember = async(memberCard) => {
     }
 }
 
+let companyCount = 0;
+
 const generateBusinessMember = async(member) => {
     if (member === undefined) {
         member = await generateMember()
     }
     const businessNumber = faker.random.number(10 ** 5)
-    const koreanCorpName = faker.company.companyName()
+    const koreanCorpName = auxiliary.companies[companyCount++]
     const englishCorpName = romanize(koreanCorpName)
     const corpCallNumber = faker.phone.phoneNumber("031########")
     const corpAddress = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
@@ -126,7 +128,7 @@ const generateProduct = async(member, category, review) => {
     const productName = faker.commerce.productName()
     const productCorp = en.company.companyName()
     const productImage = faker.random.uuid()
-    const spec = en.lorem.words()
+    const productSpec = en.lorem.words()
     const productPrice = faker.random.number(10 ** 6)
     const categoryCode = category.categoryCode
 
@@ -136,7 +138,7 @@ const generateProduct = async(member, category, review) => {
         productName,
         productCorp,
         productImage,
-        spec,
+        productSpec,
         productPrice,
         categoryCode
     }
