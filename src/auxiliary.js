@@ -1,5 +1,7 @@
 require('./dependencies')
 require('./generateFunction')
+require('./classes')
+const fs = require('fs')
 
 Array.prototype.choice = function() {
     return this[Math.floor(Math.random() * this.length)];
@@ -18,10 +20,42 @@ const funcs = [generateMember, generateBusinessMember, generateMemberCard, gener
 const ratings = ['GoldStar', 'Executive GoldStar']
 const ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+const PK = ['memberNumber', 'businessNumber', 'cardCode', 'orderNumber', 'postNumber', 'deliveryNumber', 'productCode', 'categoryCode', 'remainsNumber', 'employeeNumber']
+const companies = []
+const companyData = fs.readFileSync('./sampleData/companies.csv')
 
 const typeCheck = (e) => {
+    const types = {
+        "Date": "DATE",
+        "string": cnt => `char(${cnt})`,
+        "number": "int"
+    }
+    const mapLength = (cnt) => {
+        if(cnt <= 10) {
+            return cnt
+        } else if(cnt <= 36) {
+            return 36
+        } else {
+            return 120
+        }
+    }
+    const checkStr = cnt => e => {
+        const max = mapLength(cnt)
+        if(e.length > max) {
+            return false
+        }
+        return true
+    }
+    const mappedType = types[e]
+    const curry = fn => a => b => fn(a, b)
+    const curriedType = curry(TYPE)(mappedType)
     switch(typeof e) {
         case "string":
-            
+            return curriedType(checkStr(e.length))
     }
+    return curriedType(() => true)
+}
+
+const generateCompany = () => {
+    const csv = new CSV(data, {header: true}).parse();
 }

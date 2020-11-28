@@ -72,21 +72,7 @@ class Table {
         return head + mid + tail
     }
 
-    __get_insert_query() {
-        const head = `INSERT INTO ${name} (`
-        const tail = ");"
-        const mid = columns.map(column => `${column.name} ${column.type} ${column.annotation.get()}`).join(', ')
-        return head + mid + tail
-    }
-
     get_query() {
-
+        return __get_create_query()
     }
-}
-
-class TableBuilder {
-    constructor() {
-        
-    }
-    
 }

@@ -62,8 +62,8 @@ const generateMemberCard = async(member) => {
     if (member === undefined) {
         member = await generateMember(this)
     }
-    const code = faker.random.number(10 ** 5)
-    const number = member.memberNumber
+    const cardCode = faker.random.number(10 ** 5)
+    const memberNumber = member.memberNumber
     const cardRating = ratings.choice()
     const ratingPrice = ratingPrices[cardRating]
     const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
@@ -73,8 +73,8 @@ const generateMemberCard = async(member) => {
     expiredDateTime.setFullYear(expiredDateTime.getFullYear() + 1)
     const expiredDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('${expiredDateTime.toISOString(dateOptions)}'))`
     return {
-        code,
-        number,
+        cardCode,
+        memberNumber,
         cardRating,
         ratingPrice,
         boughtDate,
