@@ -133,7 +133,7 @@ const generateProduct = async(member, category, review) => {
     const productName = faker.commerce.productName()
     const productCorp = en.company.companyName()
     const productImage = faker.random.uuid()
-    const spec = faker.lorem.words()
+    const spec = en.lorem.words()
     const productPrice = faker.random.number(10 ** 6)
     const categoryCode = category.categoryCode
 
