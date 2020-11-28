@@ -379,10 +379,14 @@ const generateRequest = async(order, delivery) => {
             const values = []
             for(const [k, v] of Object.entries(res)) {
                 if(k.includes('DateTime')) {
-                    return;
+                    continue;
                 }
                 placeholders.push(k)
-                values.push(v)
+                if((typeof v === 'string' || v instanceof String) && !v.includes("TO_UTC_TIMESTAMP")) {
+                    values.push(`'${v}'`)
+                } else {
+                    values.push(v)
+                }
             }
             result[field].push(res)
             const query = `INSERT INTO ${placeholders.join(', ')} VALUES ${values.join(', ')}`
