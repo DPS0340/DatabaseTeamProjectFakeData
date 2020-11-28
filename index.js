@@ -24,8 +24,8 @@ const generateMember = async(memberCard) => {
     const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
     const birthDate = +birthDateTime.yymmdd()
     const memberRating = memberCard.rating
-    const callNumber = faker.phone.phoneNumber("031-####-####")
-    const phoneNumber = faker.phone.phoneNumber("010-####-####")
+    const callNumber = faker.phone.phoneNumber("031########")
+    const phoneNumber = faker.phone.phoneNumber("010########")
     const address = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
     const zipCode = en.address.zipCode()
     const email = faker.internet.email(romanize(firstname), romanize(lastname))
@@ -53,7 +53,7 @@ const generateBusinessMember = async(member) => {
     const businessNumber = faker.random.number(10 ** 10)
     const koreanCorpName = faker.company.companyName()
     const englishCorpName = romanize(koreanCorpName)
-    const corpCallNumber = faker.phone.phoneNumber("031-####-####")
+    const corpCallNumber = faker.phone.phoneNumber("031########")
     const corpAddress = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
     const corpZipCode = en.address.zipCode()
 
@@ -307,7 +307,7 @@ const generateEmployee = async() => {
     const lastname = faker.name.lastName()
     const employeeName = `${lastname}${firstname}`
     const employeeSSN = faker.random.number(10 ** 6)
-    const employeePhoneNumber = faker.phone.phoneNumber("010-####-####")
+    const employeePhoneNumber = faker.phone.phoneNumber("010########")
     const employeeEmail = faker.internet.email(romanize(firstname), romanize(lastname))
     const employeeWorkedDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
     const employeeWorkedDate = employeeWorkedDateTime.toLocaleDateString('ko-KR', dateOptions)
@@ -366,15 +366,27 @@ const generateRequest = async(order, delivery) => {
     const funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery
     , generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
     const result = new Map()
+    const queries = []
     for(const field of fields) {
         result[field] = []
     }
-    for(let i = 0; i < 30; i++) {
+    for(let i = 0; i < 10; i++) {
         for(const field of fields) {
             const selectedFun = funcs[fields.indexOf(field)]
             const res = await selectedFun()
+            const placeholders = []
+            const values = []
+            for(const [k, v] of Object.entries(res)) {
+                placeholders.push(k)
+                values.push(v)
+            }
             result[field].push(res)
+            const query = `INSERT INTO ${placeholders.join(', ')} VALUES ${values.join(', ')}`
+            queries.push(query)
         }
     }
+    console.log(queries)
+    const queriesString = queries.join(', ')
+    fs.writeFileSync('query.txt', queriesString, encoding="utf-8")
     fs.writeFileSync('data.json', JSON.stringify(result), encoding="utf-8")
 })()
