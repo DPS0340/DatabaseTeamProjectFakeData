@@ -16,20 +16,20 @@ const generateFunction = require('./generateFunction')
     const table = new Map()
     for (const field of fields) {
         result[field] = []
-        const head = `CREATE TABLE ${field} (`
-        const tail = ");"
+        const head = `CREATE TABLE ${field} (\n`
+        const tail = "\n);"
         const selectedFun = funcs[fields.indexOf(field)]
         const res = await selectedFun()
         let hasPk = false
-        const tables = Object.keys(res).map(tableName => {
+        const tables = Object.keys(res).filter(e => !e.includes("DateTime")).map(tableName => {
             let annotation = ""
             if (!hasPk && auxiliary.PK.includes(tableName)) {
                 annotation = " NOT NULL PRIMARY KEY"
                 hasPk = true
             } else if (auxiliary.FK.includes(tableName)) {
-                annotation = ` FOREIGN KEY REFERENCES ${tableName.match(/[A-Z][a-z]+/g)[0].toLowerCase()}(${field})`
+                // annotation = ` FOREIGN KEY REFERENCES ${tableName.match(/[A-Z][a-z]+/g)[0].toLowerCase()}(${field})`
             }
-            let type = auxiliary.typeCheck(res[tableName])
+            let type = auxiliary.typeCheck(tableName, res[tableName])
             return `${tableName} ${type}${annotation}`
         }).join(',\n')
         creates.push(head + tables + tail)

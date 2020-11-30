@@ -15,12 +15,12 @@ const generateMember = async(memberCard) => {
     const name = `${lastname}${firstname}`
     const englishName = `${en.name.firstName()}`
     const birthDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date("Jan 1, 90 00:00:00 GMT+09:00"))
-    const birthDate = +birthDateTime.yymmdd()
-    const memberRating = memberCard.cardRating
+    const birthDate = birthDateTime.yymmdd()
+    const memberRating = memberCard.cardName
     const callNumber = faker.phone.phoneNumber("031########")
     const phoneNumber = faker.phone.phoneNumber("010########")
     const address = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
-    const zipCode = en.address.zipCode()
+    const zipCode = en.address.zipCode("#####")
     const email = faker.internet.email(romanize(firstname), romanize(lastname))
 
     return {
@@ -46,21 +46,22 @@ const generateBusinessMember = async(member) => {
         member = await generateMember()
     }
     const businessNumber = faker.random.number(10 ** 5)
+    const memberNumber = member.memberNumber
     const koreanCorpName = auxiliary.companies[companyCount++]
     const englishCorpName = romanize(koreanCorpName)
     const corpCallNumber = faker.phone.phoneNumber("031########")
     const corpAddress = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
-    const corpZipCode = en.address.zipCode()
+    const corpZipCode = en.address.zipCode("#####")
 
     return {
         businessNumber,
+        memberNumber,
         koreanCorpName,
         englishCorpName,
         corpCallNumber,
         corpCallNumber,
         corpAddress,
         corpZipCode,
-        ...member
     }
 }
 
@@ -70,8 +71,9 @@ const generateMemberCard = async(member) => {
     }
     const cardCode = faker.random.number(10 ** 5)
     const memberNumber = member.memberNumber
-    const cardRating = auxiliary.ratings.choice()
-    const ratingPrice = auxiliary.ratingPrices[cardRating]
+    const cardName = auxiliary.ratings.choice()
+    const cardBenefit = cardName
+    const ratingPrice = auxiliary.ratingPrices[cardName]
     const boughtDateTime = faker.date.between(member.birthDateTime, new Date(Date.now()))
     const boughtDate = `SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('${boughtDateTime.toISOString(auxiliary.dateOptions)}'))`
         // 1년
@@ -81,7 +83,8 @@ const generateMemberCard = async(member) => {
     return {
         cardCode,
         memberNumber,
-        cardRating,
+        cardName,
+        cardBenefit,
         ratingPrice,
         boughtDate,
         expiredDate
@@ -89,7 +92,7 @@ const generateMemberCard = async(member) => {
 }
 
 const generateOrder = async(member) => {
-    if(member === undefined) {
+    if (member === undefined) {
         member = await generateMember()
     }
     const orderNumber = faker.random.number(10 ** 5)
@@ -113,21 +116,23 @@ const generateOrder = async(member) => {
 }
 
 const generateProduct = async(member, category, review) => {
-    if(member === undefined) {
+    if (member === undefined) {
         member = await generateMember()
     }
-    if(category === undefined) {
+    if (category === undefined) {
         category = await generateCategory()
     }
-    if(review === undefined) {
+    if (review === undefined) {
         review = await generateReview(this, category, member)
     }
 
     const productCode = faker.random.number(10 ** 5)
     const categorynumber = faker.random.number(10 ** 5)
+    const reviewContent = review.content
     const productName = faker.commerce.productName()
     const productCorp = en.company.companyName()
     const productImage = faker.random.uuid()
+    const deliveryAndRefund = ''
     const productSpec = en.lorem.words()
     const productPrice = faker.random.number(10 ** 6)
     const categoryCode = category.categoryCode
@@ -138,6 +143,8 @@ const generateProduct = async(member, category, review) => {
         productName,
         productCorp,
         productImage,
+        deliveryAndRefund,
+        reviewContent,
         productSpec,
         productPrice,
         categoryCode
@@ -155,15 +162,15 @@ const generateCategory = async() => {
 }
 
 const generateReview = async(product, category, member) => {
-    if(product === undefined) {
+    if (product === undefined) {
         product = await generateProduct()
     }
-    if(category === undefined) {
+    if (category === undefined) {
         category = await generateCategory()
     }
-    if(member === undefined) {
+    if (member === undefined) {
         member = await generateMember()
-    }   
+    }
 
     const postNumber = faker.random.number(10 ** 5)
     const productNumber = product.productCode
@@ -186,10 +193,10 @@ const generateReview = async(product, category, member) => {
 }
 
 const generateInclude = async(order, product) => {
-    if(order === undefined) {
+    if (order === undefined) {
         order = await generateOrder()
     }
-    if(product === undefined) {
+    if (product === undefined) {
         product = await generateProduct()
     }
 
@@ -226,10 +233,10 @@ const generateDelivery = async() => {
 }
 
 const generateSend = async(delivery, product) => {
-    if(delivery === undefined) {
+    if (delivery === undefined) {
         delivery = await generateDelivery()
     }
-    if(product === undefined) {
+    if (product === undefined) {
         product = await generateProduct()
     }
     const deliveryNumber = delivery.deliveryNumber
@@ -245,10 +252,10 @@ const generateSend = async(delivery, product) => {
     }
 }
 const generateRefresh = async(product, remains) => {
-    if(product === undefined) {
+    if (product === undefined) {
         product = await generateProduct()
     }
-    if(remains === undefined) {
+    if (remains === undefined) {
         remains = await generateRemains()
     }
 
@@ -278,10 +285,10 @@ const generateRemains = async() => {
     }
 }
 const generateCheck = async(remains, employee) => {
-    if(remains === undefined) {
+    if (remains === undefined) {
         remains = await generateRemains()
     }
-    if(employee === undefined) {
+    if (employee === undefined) {
         employee = await generateEmployee()
     }
     const employeeNumber = employee.employeeNumber
@@ -321,10 +328,10 @@ const generateEmployee = async() => {
 }
 
 const generateRequest = async(order, delivery) => {
-    if(order === undefined) {
+    if (order === undefined) {
         order = await generateOrder()
     }
-    if(delivery === undefined) {
+    if (delivery === undefined) {
         delivery = await generateDelivery()
     }
 
@@ -341,5 +348,4 @@ const generateRequest = async(order, delivery) => {
     }
 }
 
-exports.funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery
-    , generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
+exports.funcs = [generateMember, generateBusinessMember, generateMemberCard, generateOrder, generateProduct, generateCategory, generateReview, generateInclude, generateDelivery, generateSend, generateRefresh, generateRemains, generateCheck, generateEmployee, generateRequest]
