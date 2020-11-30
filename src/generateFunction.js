@@ -52,6 +52,7 @@ const generateBusinessMember = async(member) => {
     const corpCallNumber = faker.phone.phoneNumber("031########")
     const corpAddress = `${en.address.streetAddress()}, ${en.address.secondaryAddress()}`
     const corpZipCode = en.address.zipCode("#####")
+    const corpEmail = faker.internet.email(englishCorpName)
 
     return {
         businessNumber,
@@ -62,6 +63,7 @@ const generateBusinessMember = async(member) => {
         corpCallNumber,
         corpAddress,
         corpZipCode,
+        corpEmail
     }
 }
 

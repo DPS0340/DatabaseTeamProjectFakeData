@@ -28,6 +28,8 @@ const generateFunction = require('./generateFunction')
                 hasPk = true
             } else if (auxiliary.FK.includes(tableName)) {
                 // annotation = ` FOREIGN KEY REFERENCES ${tableName.match(/[A-Z][a-z]+/g)[0].toLowerCase()}(${field})`
+            } else if (auxiliary.NN.includes(tableName)) {
+                annotation = " NOT NULL"
             }
             let type = auxiliary.typeCheck(tableName, res[tableName])
             return `${tableName} ${type}${annotation}`

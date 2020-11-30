@@ -3,7 +3,7 @@ memberNumber Integer NOT NULL PRIMARY KEY,
 password char(16),
 name Char(32),
 englishName char(64),
-birthDate char(6),
+birthDate Date,
 memberRating Char(32),
 callNumber char(11),
 phoneNumber char(11),
@@ -19,7 +19,8 @@ koreanCorpName char(64),
 englishCorpName char(64),
 corpCallNumber char(11),
 corpAddress char(64),
-corpZipCode char(10)
+corpZipCode char(10),
+corpEmail Char(32)
 );
 
 CREATE TABLE memberCard (
@@ -28,15 +29,15 @@ memberNumber Integer,
 cardName Char(32),
 cardBenefit char(128),
 ratingPrice Integer,
-boughtDate Char(120),
-expiredDate Char(120)
+boughtDate Date,
+expiredDate Date
 );
 
 CREATE TABLE anorder (
 orderNumber Integer NOT NULL PRIMARY KEY,
 memberNumber Integer,
 productNumber Integer,
-deliveryCorpNumber Integer,
+deliveryCorpNumber Integer NOT NULL,
 totalPrice Integer,
 totalQuantity Integer,
 boughtTime Char(120)
@@ -65,7 +66,7 @@ postNumber Integer NOT NULL PRIMARY KEY,
 productNumber Integer,
 memberNumber Integer,
 categoryCode Integer,
-writeDate Char(120),
+writeDate Date,
 content char(128),
 likes Integer
 );
@@ -83,7 +84,7 @@ CREATE TABLE delivery (
 deliveryNumber Integer NOT NULL PRIMARY KEY,
 deliveryStart Char(32),
 deliveryDestination Char(32),
-deliveryDate Char(120)
+deliveryDate Date
 );
 
 CREATE TABLE send (
@@ -97,19 +98,19 @@ CREATE TABLE refresh (
 productCode Integer NOT NULL PRIMARY KEY,
 categoryCode Integer,
 remainsNumber Integer,
-refreshDate Char(120)
+refreshDate Date
 );
 
 CREATE TABLE remains (
 remainsNumber Integer NOT NULL PRIMARY KEY,
 remainsQuantity Integer,
-remainsDate Char(120)
+remainsDate Date
 );
 
 CREATE TABLE checked (
 employeeNumber Integer NOT NULL PRIMARY KEY,
 remainsNumber Integer,
-checkedDate Char(120),
+checkedDate Date,
 others char(20)
 );
 
@@ -119,7 +120,7 @@ employeeName Char(32),
 employeeSSN Integer,
 employeePhoneNumber Char(32),
 employeeEmail Char(32),
-employeeWorkedDate Char(120),
+employeeWorkedDate Date,
 employeeSalary Integer
 );
 
@@ -127,156 +128,156 @@ CREATE TABLE request (
 orderNumber Integer NOT NULL PRIMARY KEY,
 memberNumber Integer,
 deliveryNumber Integer,
-requestedDate Char(120)
+requestedDate Date
 );
 
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (5978578350, 'ri9l88pnsvldj1wa', '박예은', 'Kiley', '900203', 'Executive GoldStar', '03118012189', '01040324092', '14437 Winifred Extensions, Apt. 009', '57624', 'yeeun.bag@yahoo.co.kr');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (1836132689, 'c6w41366hp0bpl7u', '김현우', 'Minnie', '940521', 'Executive GoldStar', '03169629649', '01026362447', '357 Gabe Shoals, Suite 152', '37840', 'hyeonu_gim@gmail.com');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (9243696733, '16humdvcablxar5i', '송우진', 'Tyree', '990522', 'GoldStar', '03142553128', '01026851549', '1043 Turcotte Green, Suite 704', '89454', 'ujin_song@yahoo.co.kr');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (6444225076, 'a1d03b2p6kbxmus2', '이서연', 'Rod', '990603', 'GoldStar', '03185495920', '01023864910', '297 Kautzer Trail, Apt. 052', '55687', 'seoyeon94@gmail.com');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (7245751696, '9h5dvign3tdsqzvp', '권예준', 'Verda', '961001', 'Executive GoldStar', '03168358945', '01089081572', '67065 Price Crescent, Suite 188', '53792', 'yejun.gweon53@naver.com');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (8367285424, 'hbja9up5raqcn5dq', '신예은', 'Ressie', '971109', 'Executive GoldStar', '03107363490', '01042857266', '41481 Anika Plaza, Apt. 558', '27277', 'yeeun30@hanmail.net');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (307478855, 'iqb4s9tmfjtps6tm', '홍서연', 'Norwood', '930308', 'GoldStar', '03103379625', '01054554948', '348 Stanford Flat, Suite 229', '74133', 'seoyeon29@yahoo.co.kr');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (875056840, 'b9rps4fs9qvzlcmt', '서서현', 'Laury', '980625', 'Executive GoldStar', '03108704391', '01072667864', '23118 Aida Turnpike, Apt. 202', '19117', 'seohyeon_seo54@yahoo.co.kr');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (5267889670, '0xfoz6m3hu9gzrt8', '류윤서', 'Allene', '980131', 'Executive GoldStar', '03118949944', '01084736531', '24224 Rippin Junction, Suite 808', '63530', 'yunseo_ryu@naver.com');
-INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (6640081892, '2iubssiw7wzkpmdc', '송우진', 'Alec', '950404', 'GoldStar', '03195667671', '01091690149', '948 Winnifred Knoll, Apt. 942', '14665', 'ujin.song91@naver.com');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (86633, 4305760569, '셀트리온', 'selteurion', '03197926484', '479 Hahn Station, Apt. 131', '22121');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (94601, 5260587235, '카카오', 'kakao', '03164578385', '1495 Casper Walks, Apt. 270', '03438');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (61398, 8207858806, 'NAVER', 'naver', '03190329655', '30077 Ruthe Highway, Apt. 178', '25190');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (95796, 4962416561, '삼성전자우', 'samseongjeonjau', '03173025014', '94240 Fritsch Lake, Suite 925', '67785');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (21748, 9450282592, '신풍제약', 'sinpungjeyag', '03118089961', '08550 Bogan Fort, Apt. 731', '72367');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (10529, 820217179, '대한전선', 'daehanjeonseon', '03141159100', '34647 Chelsey Canyon, Apt. 817', '33655');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (24710, 5495813615, '필룩스', 'pilrugseu', '03140859296', '7785 Emily Flat, Apt. 436', '31612');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (59169, 4992247976, '두산중공업', 'dusanjunggongeob', '03119600223', '24312 Paucek Mall, Apt. 187', '58109');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (25302, 3320221766, 'SK', 'sk', '03125975078', '93379 Haag Vista, Apt. 515', '07541');
-INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode) VALUES (41435, 7539625755, , 'undefined', '03111935194', '6267 Frida Rest, Suite 269', '86118');
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (96309, 8228497112, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-09-28T07:50:51.932Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-09-28T07:50:51.932Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (53631, 1794028901, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('1999-08-04T15:19:25.794Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-08-04T15:19:25.794Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (10671, 5224009461, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-09-25T15:14:14.148Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-09-25T15:14:14.148Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (78490, 7808919649, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('1998-08-23T20:52:23.251Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('1999-08-23T20:52:23.251Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (44198, 7972067453, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-10-31T21:16:27.993Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-10-31T21:16:27.993Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (71804, 5331165385, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2015-05-27T12:33:18.884Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-05-27T12:33:18.884Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (12127, 9876787013, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-04-08T02:22:25.495Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-04-08T02:22:25.495Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (67184, 2920444982, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-02-18T13:24:24.567Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-02-18T13:24:24.567Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (74860, 4735382667, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2017-04-15T21:12:10.387Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-04-15T21:12:10.387Z')));
-INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (60211, 4311618362, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-08-22T13:10:57.834Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-08-22T13:10:57.834Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (68123, 8101141069, 37665, 13123, 775245, 3, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-05-30T17:45:40.158Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (4175, 6669082099, 79467, 11561, 357916, 33, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-07-15T07:01:51.369Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (59639, 63881315, 90603, 8386, 739540, 71, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-10-03T06:01:33.612Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (15995, 2618356091, 9579, 22160, 243751, 48, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-11-03T03:32:17.786Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (34289, 6446177552, 6181, 59669, 682401, 72, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-07-09T18:51:17.340Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (60137, 2968415066, 82622, 97213, 796502, 73, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-10-23T23:47:28.268Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (98864, 1555360506, 31284, 63006, 196618, 40, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-01-10T20:11:19.392Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (93711, 9449716039, 8255, 58556, 147815, 8, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-07-04T13:58:23.754Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (20927, 9835832313, 9220, 90067, 102537, 41, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-05-13T20:11:38.800Z')));
-INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (19982, 1575080268, 52595, 7693, 79609, 70, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-03-15T18:56:15.374Z')));
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (8930, 60774, 'Intelligent Cotton Chair', 'Douglas, Fadel and Koss', '581690cd-8e3f-456b-a510-33f2a2d12bfa', '', 'et sit voluptatum', 'eos quaerat et', 812396, 68655);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (22079, 73741, 'Small Cotton Car', 'Bergstrom - Paucek', 'b48f0fb2-157a-409a-9537-285e1667dcd7', '', 'et nulla ut', 'est aliquid dolorem', 860213, 40385);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (15016, 58594, 'Handmade Fresh Gloves', 'Ernser Inc', 'aefc3365-8b1b-484a-a542-b9a04f65c49f', '', 'vitae sed error', 'ullam et temporibus', 475626, 83028);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (57408, 2866, 'Awesome Granite Gloves', 'Waters Inc', 'ca6d6839-067a-4692-bb84-f1e35099ac7a', '', 'pariatur cumque aspernatur', 'quo ut ut', 754601, 18941);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (78720, 42584, 'Intelligent Frozen Computer', 'Brekke Group', '9a7702d6-66fc-4dd5-8b8f-28e6669e81ec', '', 'consectetur est qui', 'dolor praesentium rem', 498878, 40847);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (53047, 20941, 'Unbranded Plastic Computer', 'Price, Corkery and Willms', '183cf4ac-8ddb-4399-96af-d38197a47dd5', '', 'ut sit officiis', 'adipisci optio excepturi', 352186, 18910);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (71581, 73726, 'Generic Cotton Towels', 'Breitenberg, Watsica and Beer', '5cc683ea-3e3a-4958-98d4-1080c2f64bd9', '', 'id doloribus sapiente', 'ut cumque ut', 183104, 47183);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (71587, 47181, 'Ergonomic Granite Soap', 'Dickens - Bernier', 'aa9e704f-bbbc-4d72-95e0-24462101db3a', '', 'animi sunt error', 'temporibus porro voluptates', 571410, 60267);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (13329, 22432, 'Incredible Cotton Keyboard', 'Jakubowski, Roob and Fritsch', '22941be0-4d95-4f8e-8df8-b9b2d0ae7400', '', 'molestias debitis quae', 'repellat quidem eius', 245978, 54459);
-INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (40551, 7621, 'Licensed Frozen Bike', 'Wilkinson, Kshlerin and Herman', '1242c3e4-56cd-43dd-b5ba-6460483a45f6', '', 'sed dolorem ratione', 'eum et modi', 240112, 13864);
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (35027, 'paradigms');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (20473, 'convergence');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (78262, 'models');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (59207, 'vortals');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (60131, 'channels');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (34201, 'models');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (88863, 'e-commerce');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (21173, 'action-items');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (99016, 'systems');
-INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (99293, 'synergies');
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (30586, 37771, 6137751201, 86351, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-10-06T15:37:02.199Z')), 'impedit eum nisi', 73);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (36343, 48942, 2865542408, 30832, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-07-03T12:55:49.857Z')), 'laudantium sequi sequi', 101);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (89106, 58198, 7971232771, 95522, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-05-01T10:41:52.740Z')), 'libero cumque reprehenderit', 56);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (43768, 73275, 4976872865, 17815, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-11-09T09:15:23.917Z')), 'molestiae non maiores', 79);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (88180, 11246, 6706025421, 41391, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-01-25T04:15:21.551Z')), 'quam voluptatum culpa', 463);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (92160, 6409, 1056085492, 13440, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-05-14T10:10:53.955Z')), 'quod laborum accusantium', 10);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (52694, 11776, 838089231, 62359, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-11-18T15:01:19.346Z')), 'quos enim sit', 348);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (15844, 75632, 1536299127, 98893, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-05-15T04:50:06.194Z')), 'optio quae porro', 485);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (29671, 42170, 9376017629, 95836, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-04-17T16:51:15.702Z')), 'omnis quo sit', 171);
-INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (18854, 87682, 4227965742, 89861, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-08-18T02:02:33.149Z')), 'ipsam et et', 273);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 9002935773, 66553, 37648, 10, 241844);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 4842804552, 27807, 65722, 63, 873295);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 5470907704, 24075, 84517, 35, 519486);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 3580146716, 58389, 33754, 75, 657442);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 4174982663, 16095, 11455, 80, 76326);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 3607093645, 18260, 6500, 47, 956033);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 7658038931, 54636, 65222, 73, 353277);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 1738305490, 10195, 6542, 42, 463792);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 6779024922, 74309, 75623, 83, 687187);
-INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 7553165260, 46070, 52979, 41, 290751);
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (155590, '3423 Thiel Course', '35471 Evans Estates', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-10-21T02:02:15.974Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (296714, '074 Timothy Harbor', '21677 Jevon Forge', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-05-05T02:26:51.750Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (633612, '219 Tatum Lodge', '17645 Brandyn Forge', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-02-15T07:13:27.785Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (69368, '820 Danyka Rue', '35893 Lorenz Circle', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-06-27T13:17:34.827Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (365691, '1848 Wintheiser Underpass', '19992 Schiller Lodge', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-01-05T01:39:10.379Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (733358, '7930 Ceasar Loop', '772 Ray Summit', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-11-07T14:23:12.015Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (337623, '9765 Jalon Fall', '7603 Gilbert Ferry', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-11-03T17:24:36.888Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (77110, '038 Larson Highway', '836 Bernhard Wall', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-03-12T07:51:11.340Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (38766, '051 White Extensions', '04331 Jerde Village', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-05-08T04:12:01.200Z')));
-INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (90446, '0702 Nelle Bypass', '9265 Reichel Islands', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-04-09T14:08:39.749Z')));
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (762173, 96938, 59020, 1);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (408253, 31347, 60857, 39);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (621787, 90012, 11368, 44);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (519598, 88899, 74255, 32);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (982999, 66091, 80706, 83);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (125717, 50027, 8778, 88);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (640406, 39077, 4113, 33);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (705101, 86998, 82991, 23);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (367727, 90903, 60701, 74);
-INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (695022, 93035, 29946, 73);
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (35116, 98989, 939581, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-05-18T20:30:45.089Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (91963, 66981, 740222, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-07-26T05:11:51.422Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (64303, 74442, 855329, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-07-27T17:15:54.952Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (11163, 50022, 818401, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-08-01T00:29:35.149Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (96547, 88734, 734219, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-07-28T00:51:46.846Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (51026, 89021, 341198, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-01-17T17:43:30.332Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (32872, 58158, 307899, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-05-14T03:38:39.310Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (72316, 84706, 596832, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-08-09T13:23:33.555Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (40524, 298, 478166, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-12-29T03:28:33.715Z')));
-INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (12404, 79921, 538448, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-12-24T04:57:13.605Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (193714, 3, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-05-22T09:56:55.708Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (576773, 13, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-07-28T21:20:44.388Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (860255, 30, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-02-25T13:22:50.929Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (355722, 84, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-10-04T08:51:50.297Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (815939, 11, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-04-04T11:22:27.355Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (40177, 14, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-12-19T12:02:32.833Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (463038, 86, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-10-27T04:04:03.493Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (269347, 18, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-09-13T10:02:31.891Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (296242, 85, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-04-22T11:47:03.876Z')));
-INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (800952, 69, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-08-04T03:26:15.038Z')));
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (685533, 28606, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-08-21T10:48:49.455Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (696846, 275290, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2017-04-26T14:10:51.513Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (803741, 136961, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-03-30T14:00:53.335Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (304423, 535080, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-01-24T04:52:22.318Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (541622, 786289, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-04-18T19:30:24.300Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (389382, 391523, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-07-13T19:52:33.899Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (658107, 137332, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-02-24T17:36:30.741Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (216372, 882593, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-12-28T17:37:01.851Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (605627, 778937, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-02-23T22:35:23.832Z')), '');
-INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (788507, 466058, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-12-13T14:38:48.774Z')), '');
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (375341, '안서연', 978201, '01063699383', 'seoyeon.an53@gmail.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-07-07T21:54:31.028Z')), 30000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (727241, '박예은', 684461, '01082795197', 'yeeun6@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-12-23T00:29:49.904Z')), 70000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (964388, '류현우', 877092, '01011299700', 'hyeonu_ryu@yahoo.co.kr', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-08-06T21:16:39.779Z')), 40000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (11494, '신수빈', 919699, '01028693690', 'subin_sin@hanmail.net', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-11-02T01:42:39.652Z')), 110000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (647741, '김서윤', 326661, '01009542522', 'seoyun_gim@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-05-06T08:58:21.431Z')), 30000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (240679, '서서연', 751406, '01077918168', 'seoyeon_seo@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-03-12T14:00:54.243Z')), 50000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (410760, '오현준', 849612, '01003363186', 'hyeonjun24@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-10-02T13:52:05.611Z')), 30000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (989616, '최우진', 546071, '01001685813', 'ujin_coe29@yahoo.co.kr', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-09-28T18:05:25.164Z')), 30000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (872463, '송지우', 290431, '01054367636', 'jiu80@gmail.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-03-24T06:30:04.297Z')), 120000000);
-INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (833675, '한현준', 194169, '01081244796', 'hyeonjun3@gmail.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-04-19T02:24:26.893Z')), 80000000);
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (28700, 887226432, 237307, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-09-15T23:02:14.806Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (99928, 9114177695, 172101, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-10-17T17:13:34.125Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (95544, 8930545529, 89544, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-04-29T13:53:46.435Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (79742, 206706579, 164770, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-12-06T11:27:46.238Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (35903, 6199793965, 978407, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-10-18T10:34:33.677Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (83579, 5721144867, 120660, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-10-25T14:28:47.130Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (66764, 4057088357, 236320, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-06-06T10:26:25.046Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (56631, 2576806359, 894692, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-08-19T19:16:59.750Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (58007, 538331808, 90005, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-01-13T18:58:17.526Z')));
-INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (17785, 9851172332, 537862, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-07-05T18:16:56.520Z')));
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (3339901999, 'zxjlhivr62jcsxpr', '신서현', 'Stanley', '900724', 'GoldStar', '03178952130', '01041138441', '91255 Reid Manors, Apt. 312', '17670', 'seohyeon.sin63@yahoo.co.kr');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (284521128, '9yjz5eij7jyttqx1', '최지우', 'Carol', '910906', 'Executive GoldStar', '03198376369', '01085432313', '81087 Bogisich Causeway, Apt. 034', '24180', 'jiu.coe95@hanmail.net');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (1323483758, 'dfdvde78h16wcdes', '윤민재', 'Eddie', '950815', 'Executive GoldStar', '03164552469', '01029703003', '6675 Ardella Island, Suite 402', '08937', 'minjae40@gmail.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (5163364243, 'ndo296q0b7kn201s', '신지후', 'Aliya', '990404', 'GoldStar', '03141468501', '01032000532', '86136 Murphy Run, Suite 238', '48619', 'jihu94@naver.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (9452336443, '9mbeavl5k1yi403i', '권예은', 'Johathan', '910430', 'Executive GoldStar', '03197820474', '01060725885', '558 Walsh Skyway, Apt. 062', '13583', 'yeeun.gweon66@gmail.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (2871251295, '4lbyowf07oo1ziqu', '임현준', 'Nash', '900107', 'Executive GoldStar', '03125026618', '01022318474', '09002 Cummerata Drive, Apt. 887', '97786', 'hyeonjun.im@gmail.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (4089111059, 'ix2g9jifnjio34gy', '장민준', 'Antwon', '970618', 'GoldStar', '03152877474', '01086208679', '00111 Carey Plaza, Apt. 674', '11421', 'minjun_jang52@naver.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (5710571513, '1piumxbjyiupss79', '박하은', 'Valentina', '971207', 'GoldStar', '03139610771', '01009186485', '7197 Augustine Shoal, Suite 840', '34257', 'haeun64@gmail.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (8858039335, 'hk26nz5a9rqjj1sj', '김예준', 'Amie', '921101', 'Executive GoldStar', '03158193305', '01098527786', '7465 Boyer Oval, Apt. 473', '21079', 'yejun64@gmail.com');
+INSERT INTO MEMBER (memberNumber, password, name, englishName, birthDate, memberRating, callNumber, phoneNumber, address, zipCode, email) VALUES (574829177, 'u0uvpdg2vweqvxhf', '박민재', 'Cassandre', '980512', 'GoldStar', '03145114827', '01004320324', '566 Emmitt Heights, Apt. 751', '99235', 'minjae21@naver.com');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (52452, 1601438818, '셀트리온', 'selteurion', '03181399240', '4532 White Meadows, Suite 030', '59153', 'selteurion_@hanmail.net');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (17408, 5865017497, '카카오', 'kakao', '03132321545', '673 Adrian Falls, Suite 553', '46345', 'kakao_80@naver.com');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (41740, 8965680367, 'NAVER', 'naver', '03109025362', '70331 Rutherford Club, Apt. 545', '40538', 'naver_@yahoo.co.kr');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (28106, 1221850735, '삼성전자우', 'samseongjeonjau', '03100528662', '822 Nicolas Flat, Apt. 251', '57934', 'samseongjeonjau.@hanmail.net');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (1864, 2628458196, '신풍제약', 'sinpungjeyag', '03131948095', '0521 Rosella Park, Apt. 904', '11224', 'sinpungjeyag.@yahoo.co.kr');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (93237, 1275674849, '대한전선', 'daehanjeonseon', '03177558631', '9467 Marcus Light, Apt. 408', '22867', 'daehanjeonseon.30@naver.com');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (18793, 323756816, '필룩스', 'pilrugseu', '03107048760', '666 Hansen Trafficway, Apt. 705', '78716', 'pilrugseu.21@yahoo.co.kr');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (6747, 4229645976, '두산중공업', 'dusanjunggongeob', '03145670801', '024 Gerson Parkways, Apt. 455', '49881', 'dusanjunggongeob1@naver.com');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (46014, 2177221949, 'SK', 'sk', '03178866980', '04321 Funk Fort, Suite 277', '57585', 'sk_87@yahoo.co.kr');
+INSERT INTO BUSINESSMEMBER (businessNumber, memberNumber, koreanCorpName, englishCorpName, corpCallNumber, corpAddress, corpZipCode, corpEmail) VALUES (68079, 9820836809, , 'undefined', '03186799433', '78871 Kay Drive, Apt. 404', '09595', 'undefined2@hanmail.net');
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (88512, 7317716894, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-04-29T00:53:23.377Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-04-29T00:53:23.377Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (94623, 1621177245, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-06-08T02:42:56.576Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-06-08T02:42:56.576Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (49073, 3077791210, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-03-17T18:13:56.503Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-03-17T18:13:56.503Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (48259, 1301124801, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-08-11T17:36:04.843Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-08-11T17:36:04.843Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (5737, 5423660555, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-04-04T01:47:00.531Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2017-04-04T01:47:00.531Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (98073, 5954836079, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-07-28T21:01:28.637Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-07-28T21:01:28.637Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (91919, 4472254026, 'Executive GoldStar', 'Executive GoldStar', 100000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2015-06-22T07:23:12.015Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-06-22T07:23:12.015Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (75853, 4261076604, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-12-23T07:25:08.744Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-12-23T07:25:08.744Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (61601, 718201033, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-10-22T22:09:07.112Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-10-22T22:09:07.112Z')));
+INSERT INTO MEMBERCARD (cardCode, memberNumber, cardName, cardBenefit, ratingPrice, boughtDate, expiredDate) VALUES (25591, 6151398220, 'GoldStar', 'GoldStar', 50000, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-11-08T16:40:09.912Z')), SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-11-08T16:40:09.912Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (11677, 2019348351, 753, 88695, 579889, 13, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-08-17T13:55:46.231Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (49261, 7985111536, 42207, 61955, 652579, 98, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-07-11T15:58:06.777Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (69238, 1828900536, 265, 85909, 743601, 21, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-07-03T23:28:27.292Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (28648, 7695970212, 74459, 40674, 938358, 71, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-09-09T13:22:31.756Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (56697, 1667276090, 87238, 54505, 126079, 3, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-06-07T06:35:52.452Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (34809, 4841399717, 86977, 46797, 945091, 70, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-03-02T15:57:55.822Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (95528, 6576951149, 21414, 46857, 949864, 0, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-10-04T07:08:16.506Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (69911, 747792029, 20824, 63604, 291624, 61, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-12-28T19:29:44.212Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (75858, 4399654071, 58669, 4852, 479067, 70, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-05-26T17:34:04.259Z')));
+INSERT INTO ANORDER (orderNumber, memberNumber, productNumber, deliveryCorpNumber, totalPrice, totalQuantity, boughtTime) VALUES (87013, 4332183993, 98865, 76620, 624306, 72, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-01-01T04:58:57.392Z')));
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (78223, 49093, 'Handmade Plastic Hat', 'Nader, Boyle and Lemke', '546151d5-9e6d-44f4-99b4-189f0507988c', '', 'quidem esse ut', 'perferendis aut id', 604182, 34661);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (61044, 97436, 'Tasty Frozen Soap', 'Marquardt - Kuphal', 'e1f24ace-dd35-4bbd-b53b-5be4b3e84471', '', 'ad non harum', 'accusamus voluptatem quisquam', 568519, 68623);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (71473, 29817, 'Fantastic Granite Chips', 'Wuckert, Treutel and O'Conner', '5590d6dd-9064-4080-9472-7565fdd5a066', '', 'aliquam laborum vel', 'sit et voluptatem', 524994, 98312);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (15222, 71488, 'Intelligent Soft Salad', 'Jacobson, Labadie and Dare', '0f2a19b4-839b-4577-bb68-10ff868c75b3', '', 'occaecati maxime maxime', 'rem vitae enim', 49248, 67052);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (4224, 37221, 'Tasty Soft Soap', 'Halvorson, Ullrich and Moore', 'cbbc230a-f114-492f-8961-c93f346af16b', '', 'quis velit repudiandae', 'consequatur id odio', 279097, 41697);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (52708, 19586, 'Handmade Plastic Pizza', 'Bergstrom, Purdy and Grimes', 'c8dcc10f-5d75-455f-b553-b85a6eddeed5', '', 'non in eum', 'qui possimus nihil', 979231, 2306);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (96196, 41523, 'Practical Rubber Soap', 'Kirlin LLC', '405636c7-4867-48ba-89f9-f4874e23f45c', '', 'dolor laborum ex', 'necessitatibus repudiandae animi', 308779, 20927);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (55841, 21341, 'Intelligent Granite Computer', 'Johnson - Hudson', 'e7c21e9f-dccb-4aa5-8d5d-875a807d5c20', '', 'commodi omnis qui', 'illum cum et', 523029, 43145);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (59385, 66026, 'Sleek Plastic Chair', 'Wuckert LLC', 'a37021da-4adb-4afc-9ef7-070647acaa6b', '', 'incidunt earum enim', 'molestiae quaerat esse', 991798, 93120);
+INSERT INTO PRODUCT (productCode, categorynumber, productName, productCorp, productImage, deliveryAndRefund, reviewContent, productSpec, productPrice, categoryCode) VALUES (2539, 11377, 'Licensed Steel Tuna', 'Bergstrom, Wisoky and Braun', '2b2df4d3-0b3e-4c0b-ada8-b7ca070fd795', '', 'quae ut alias', 'maiores occaecati deleniti', 386180, 1260);
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (21510, 'architectures');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (70467, 'vortals');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (77586, 'relationships');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (13884, 'channels');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (7595, 'synergies');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (55557, 'systems');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (9773, 'niches');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (18070, 'convergence');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (2343, 'relationships');
+INSERT INTO CATEGORY (categoryCode, categoryName) VALUES (16581, 'functionalities');
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (21198, 45991, 9060456194, 84617, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-09-22T00:00:31.810Z')), 'sint dicta quia', 444);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (76375, 69520, 7615496242, 18488, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-10-11T11:31:56.834Z')), 'a fugit incidunt', 178);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (57606, 75184, 8718322337, 68442, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-03-25T21:37:05.305Z')), 'ut qui ex', 23);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (56208, 47241, 9707088522, 19911, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-08-30T15:24:45.656Z')), 'voluptatum eveniet vel', 134);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (99324, 69245, 1484377980, 92956, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-04-30T11:35:09.791Z')), 'cum dolor quo', 413);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (64608, 47630, 3313882937, 48817, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-06-05T15:33:56.676Z')), 'ab dicta deserunt', 102);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (56904, 24330, 7412780538, 25386, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-08-22T11:13:41.671Z')), 'et impedit sit', 302);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (68171, 92852, 2877689197, 75429, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-04-29T04:22:39.801Z')), 'placeat est cumque', 345);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (69705, 16397, 5178906540, 60756, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-12-30T23:24:31.308Z')), 'molestiae voluptas et', 299);
+INSERT INTO REVIEW (postNumber, productNumber, memberNumber, categoryCode, writeDate, content, likes) VALUES (65029, 30668, 5925504086, 62689, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-08-06T08:02:07.820Z')), 'totam molestias voluptatem', 165);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 2125186354, 54486, 47931, 69, 838857);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 6750479576, 41409, 86983, 60, 507415);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 9660329260, 48596, 59560, 17, 144219);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 4517010094, 38606, 81371, 25, 953477);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 9107556711, 94697, 65373, 32, 187592);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 2755120927, 64215, 46290, 42, 186426);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 7251046945, 25579, 32059, 68, 813122);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 8045396514, 56993, 99663, 80, 606474);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 8496070525, 21759, 92195, 44, 4416);
+INSERT INTO INCLUDE (orderNumber, memberNumber, productCode, categoryCode, quantity, sumPrice) VALUES (, 2689620955, 63931, 12566, 21, 362302);
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (35707, '288 Frederic Underpass', '235 Prosacco Tunnel', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-03-07T06:50:45.718Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (908187, '892 Von Falls', '23465 Tyson Crescent', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-11-27T06:10:19.837Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (66712, '80469 Fadel Ways', '6321 Sanford Ferry', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-01-11T18:28:47.701Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (988845, '567 Aiyana Roads', '902 Kyra Greens', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-07-01T21:08:46.135Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (622727, '00447 Bahringer Course', '566 Brice Villages', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-08-26T14:53:33.309Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (881005, '2125 Funk Estates', '4250 Jovan Crossroad', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-04-29T19:08:36.562Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (178751, '58929 Davis Fall', '1753 Hamill Loop', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-04-26T22:52:54.400Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (175855, '43610 Ulices Garden', '68822 Joyce Route', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-01-14T20:51:05.009Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (873479, '33068 Alexandrine Mills', '2141 Malachi Harbors', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-04-25T04:11:30.771Z')));
+INSERT INTO DELIVERY (deliveryNumber, deliveryStart, deliveryDestination, deliveryDate) VALUES (453334, '8521 Ebert Row', '094 Chloe Stream', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-04-01T18:32:34.370Z')));
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (2283, 60128, 72987, 33);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (366359, 31940, 53687, 50);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (253655, 64099, 86248, 81);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (604454, 46849, 27219, 58);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (729129, 92129, 26690, 10);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (798041, 28751, 41919, 47);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (8821, 62433, 32882, 85);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (790271, 75670, 42612, 43);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (360735, 81860, 64397, 5);
+INSERT INTO SEND (deliveryNumber, productCode, categoryCode, totalTime) VALUES (756568, 92974, 84476, 34);
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (12033, 57912, 173634, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-07-05T03:19:14.581Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (96220, 12239, 76598, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-06-08T08:36:09.219Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (53309, 84800, 910405, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-03-26T22:18:59.689Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (47250, 23724, 335881, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-09-23T22:34:25.340Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (75657, 17340, 159784, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-03-08T01:20:38.200Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (81611, 2066, 147782, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-07-18T11:47:48.947Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (72886, 83944, 749861, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-09-06T06:53:58.395Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (14552, 20635, 345246, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-03-23T06:14:59.945Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (93991, 51920, 972423, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-03-17T23:56:48.190Z')));
+INSERT INTO REFRESH (productCode, categoryCode, remainsNumber, refreshDate) VALUES (75023, 88931, 275939, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2015-11-15T07:34:25.856Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (177432, 89, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-09-11T15:51:31.176Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (348792, 77, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-04-11T07:36:25.134Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (420700, 71, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-07-02T09:14:48.717Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (70954, 15, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-04-11T01:03:31.734Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (332120, 70, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-10-26T05:44:50.810Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (565600, 100, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-06-23T08:08:44.194Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (790908, 97, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2017-11-08T10:17:00.724Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (988279, 96, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-07-24T17:59:32.633Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (523554, 56, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-06-17T02:23:48.679Z')));
+INSERT INTO REMAINS (remainsNumber, remainsQuantity, remainsDate) VALUES (199409, 48, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2006-11-21T07:49:53.884Z')));
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (964223, 547639, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2018-07-18T15:47:29.777Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (955118, 25726, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2005-07-10T20:24:06.047Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (991681, 879964, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2012-09-22T18:18:05.349Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (926801, 766958, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-04-09T14:41:48.390Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (550412, 711718, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2015-08-06T16:28:25.344Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (309007, 148826, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-02-14T01:33:27.851Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (863114, 429864, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-10-06T19:24:30.020Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (808880, 688918, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2000-04-13T07:05:29.634Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (369692, 519272, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2020-09-10T04:56:00.172Z')), '');
+INSERT INTO CHECKED (employeeNumber, remainsNumber, checkedDate, others) VALUES (979801, 646134, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-02-26T01:37:15.695Z')), '');
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (530691, '홍서현', 123323, '01081662282', 'seohyeon80@hanmail.net', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2002-02-03T09:06:19.113Z')), 70000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (992151, '서건우', 233753, '01072809369', 'geonu_seo@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-04-18T15:13:19.324Z')), 50000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (106531, '서지훈', 660789, '01021579188', 'jihun55@gmail.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2003-02-28T07:50:40.716Z')), 50000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (34848, '안건우', 477637, '01029829226', 'geonu61@hanmail.net', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2019-09-20T23:07:39.507Z')), 60000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (263259, '박윤서', 430228, '01061565951', 'yunseo49@yahoo.co.kr', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2016-03-01T04:49:08.192Z')), 90000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (925956, '송건우', 588201, '01060858283', 'geonu.song@hanmail.net', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2017-09-20T08:56:53.497Z')), 120000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (376646, '류민서', 48727, '01058289718', 'minseo_ryu@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2015-04-26T18:16:34.464Z')), 40000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (737438, '류서현', 381137, '01043461904', 'seohyeon_ryu@yahoo.co.kr', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2001-08-17T22:57:10.775Z')), 120000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (12336, '강하은', 322325, '01065896715', 'haeun_gang12@hanmail.net', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2009-09-15T00:48:49.554Z')), 120000000);
+INSERT INTO EMPLOYEE (employeeNumber, employeeName, employeeSSN, employeePhoneNumber, employeeEmail, employeeWorkedDate, employeeSalary) VALUES (609702, '류민서', 43309, '01047139655', 'minseo13@naver.com', SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2004-03-14T20:56:23.509Z')), 40000000);
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (5472, 7389195552, 35634, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-08-29T13:37:49.995Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (5644, 5431194787, 786257, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-07-22T07:17:16.670Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (99554, 8760844788, 456240, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-03-24T01:14:06.322Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (33743, 7413343771, 218887, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-10-16T07:49:17.350Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (79228, 6662400158, 739075, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2013-10-10T15:35:11.223Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (32241, 3321424324, 317571, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2014-03-04T00:20:13.536Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (36541, 4803819193, 405258, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2011-06-23T11:07:18.328Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (18194, 4319415565, 569272, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2008-05-05T22:23:38.823Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (97474, 7029843796, 493240, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2007-05-13T12:25:48.906Z')));
+INSERT INTO REQUEST (orderNumber, memberNumber, deliveryNumber, requestedDate) VALUES (6845, 2382068783, 503166, SYS_EXTRACT_UTC(TO_UTC_TIMESTAMP_TZ('2010-07-01T18:03:51.992Z')));
