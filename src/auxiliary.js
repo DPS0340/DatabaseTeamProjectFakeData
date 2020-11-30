@@ -27,9 +27,9 @@ console.log(exports.reviews.length)
 
 exports.typeCheck = (k, e) => {
     const types = {
-        "Date": "DATE",
-        "string": cnt => `char(${cnt})`,
-        "number": "integer"
+        "Date": "Date",
+        "string": cnt => `Char(${cnt})`,
+        "number": "Integer"
     }
     const mapLength = (cnt) => {
         if (cnt <= 32) {
