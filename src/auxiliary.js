@@ -8,9 +8,9 @@ Array.prototype.choice = function() {
 
 Date.prototype.yymmdd = function() {
     var yy = this.getFullYear().toString().slice(2)
-    var mm = (this.getMonth()+1).toString()
-    var dd  = this.getDate().toString()
-    return yy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0])
+    var mm = (this.getMonth() + 1).toString()
+    var dd = this.getDate().toString()
+    return yy + (mm[1] ? mm : "0" + mm[0]) + (dd[1] ? dd : "0" + dd[0])
 };
 
 exports.fields = ['member', 'businessMember', 'memberCard', 'order', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'check', 'employee', 'request']
@@ -28,25 +28,25 @@ exports.typeCheck = (e) => {
     const types = {
         "Date": "DATE",
         "string": cnt => `char(${cnt})`,
-        "number": "int"
+        "number": "integer"
     }
     const mapLength = (cnt) => {
-        if(cnt <= 36) {
-            return 36
+        if (cnt <= 32) {
+            return 32
         } else {
             return 120
         }
     }
     const checkStr = cnt => e => {
         const max = mapLength(cnt)
-        if(e.length > max) {
+        if (e.length > max) {
             return false
         }
         return true
     }
     const mappedType = types[typeof e]
     let result
-    switch(typeof e) {
+    switch (typeof e) {
         case "string":
             result = mappedType(mapLength(e.length))
             break
