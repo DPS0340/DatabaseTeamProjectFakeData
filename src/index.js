@@ -47,7 +47,7 @@ const generateFunction = require('./generateFunction')
                 }
                 placeholders.push(k)
                 if ((typeof v === 'string' || v instanceof String) && !v.includes("TO_UTC_TIMESTAMP")) {
-                    values.push(`'${v}'`)
+                    values.push(`'${v.replace("'", "\'")}'`)
                 } else {
                     values.push(v)
                 }
