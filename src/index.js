@@ -57,6 +57,7 @@ const generateFunction = require('./generateFunction')
             const query = `INSERT INTO ${field.toUpperCase()} (${placeholders.join(', ')}) VALUES (${values.join(', ')});`
             queries.push(query)
         }
+        queries.push('') // Newline
     }
     const queriesString = `${creates.join('\n\n')}\n\n${queries.join('\n')}`
     fs.writeFileSync('./sampleData/table.json', JSON.stringify(table), encoding = "utf-8")
