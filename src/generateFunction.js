@@ -129,7 +129,6 @@ const generateProduct = async(member, category, review) => {
     }
 
     const productCode = faker.random.number(10 ** 5)
-    const categorynumber = faker.random.number(10 ** 5)
     const reviewContent = review.content
     const productName = faker.commerce.productName()
     const productCorp = en.company.companyName()
@@ -141,7 +140,6 @@ const generateProduct = async(member, category, review) => {
 
     return {
         productCode,
-        categorynumber,
         productName,
         productCorp,
         productImage,
