@@ -59,5 +59,5 @@ const generateFunction = require('./generateFunction')
     const queriesString = `${creates.join('\n\n')}\n\n${queries.join('\n')}`
     fs.writeFileSync('./sampleData/table.json', JSON.stringify(table), encoding = "utf-8")
     fs.writeFileSync('./sampleData/query.txt', queriesString, encoding = "utf-8")
-    fs.writeFileSync('./sampleData/sampleDatadata.json', JSON.stringify(result), encoding = "utf-8")
+    fs.writeFileSync('./sampleData/sampleData.json', JSON.stringify(result), encoding = "utf-8")
 })()
