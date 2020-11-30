@@ -14,7 +14,7 @@ Date.prototype.yymmdd = function() {
 };
 
 exports.fields = ['member', 'businessMember', 'memberCard', 'anorder', 'product', 'category', 'review', 'include', 'delivery', 'send', 'refresh', 'remains', 'checked', 'employee', 'request']
-exports.lengths = { 'callNumber': 11, 'phoneNumber': 11, 'address': 128, 'corpCallNumber': 11, 'koreanCorpName': 64, 'englishCorpName': 64, 'password': 16, 'englishName': 64, 'birthDate': 6, 'corpAddress': 64, 'cardBenefit': 128, 'content': 128, 'reviewContent': 128, 'productSpec': 128, 'deliveryAndRefund': 20, 'others': 20, 'zipCode': 10, 'corpZipCode': 10 }
+exports.lengths = { 'employeePhoneNumber': 11, 'callNumber': 11, 'phoneNumber': 11, 'address': 128, 'corpCallNumber': 11, 'koreanCorpName': 64, 'englishCorpName': 64, 'password': 16, 'englishName': 64, 'birthDate': 6, 'corpAddress': 64, 'cardBenefit': 128, 'content': 128, 'reviewContent': 128, 'productSpec': 128, 'deliveryAndRefund': 20, 'others': 20, 'zipCode': 10, 'corpZipCode': 10 }
 exports.ratings = ['GoldStar', 'Executive GoldStar']
 exports.ratingPrices = { 'GoldStar': 50000, 'Executive GoldStar': 100000 }
 exports.dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }

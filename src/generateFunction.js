@@ -200,7 +200,7 @@ const generateInclude = async(order, product) => {
         product = await generateProduct()
     }
 
-    const orderNumber = order.number
+    const orderNumber = order.orderNumber
     const memberNumber = order.memberNumber
     const productCode = product.productCode
     const categoryCode = product.categoryCode
