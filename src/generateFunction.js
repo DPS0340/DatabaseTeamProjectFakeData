@@ -93,14 +93,18 @@ const generateMemberCard = async(member) => {
     }
 }
 
-const generateOrder = async(member) => {
+const generateOrder = async(member, delivery) => {
     if (member === undefined) {
         member = await generateMember()
+    }
+    if (delivery === undefined) {
+        delivery = await generateDelivery()
     }
     const orderNumber = faker.random.number(10 ** 5)
     const memberNumber = member.memberNumber
     const productNumber = faker.random.number(10 ** 5)
     const deliveryCorpNumber = faker.random.number(10 ** 5)
+    const deliveryNumber = delivery.deliveryNumber
     const totalPrice = faker.random.number(10 ** 6)
     const totalQuantity = faker.random.number(100)
     const boughtDateTime = await faker.date.between(new Date("Jan 1, 00 00:00:00 GMT+09:00"), new Date(Date.now()))
@@ -110,6 +114,7 @@ const generateOrder = async(member) => {
         orderNumber,
         memberNumber,
         productNumber,
+        deliveryNumber,
         deliveryCorpNumber,
         totalPrice,
         totalQuantity,
